@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product';
 import { ProductService } from './product.service';
 
+
 @Component({
-    selector: 'pm-products',
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.css']
 })
@@ -14,7 +14,7 @@ export class ProductListComponent implements OnInit {
     showImage: boolean = false;
     _listFilter: string;
     filteredProducts: IProduct[];
-
+    errorMessage: string;
     get listFilter(): string {
         return this._listFilter;
     }
@@ -33,9 +33,19 @@ export class ProductListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.products = this._productService.getProducts();
-        this.filteredProducts = this.products;
+        this.products = this.filteredProducts = this._productService.getProducts1();
+        
     }
+
+    // ngOnInit(): void {
+    //     this._productService.getProducts()
+    //         .subscribe(products => {
+    //               this.products = products;
+    //               this.filteredProducts = this.products;                  
+    //             },
+    //         error => this.errorMessage = <any>error);
+        
+    // }
 
     onRatingClicked(message: string): void {
         this.pageTitle = 'Product rating: ' + message;

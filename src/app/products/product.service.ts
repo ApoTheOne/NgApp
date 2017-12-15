@@ -1,13 +1,28 @@
 import { Injectable } from "@angular/core";
 import { IProduct } from "./product";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+// import 'rxjs/add/observable/throw';
+// import 'rxjs/add/observable/catch';
+//import 'rxjs/add/observable/do';
 
 @Injectable()
 export class ProductService {
-    getProducts(): IProduct[] {
+    private _productUrl = './api/products/product.json';
+
+    constructor(private _http: HttpClient) { }
+
+    getProducts(): Observable<IProduct[]> {
+        return this._http.get<IProduct[]>(this._productUrl)
+        //.do(data => console.log('All: ' + JSON.stringify(data)))
+        //.catch(this.handleError);
+    }
+
+    getProducts1(): IProduct[] {
         return [
             {
                 "productId": 1,
-                "productName": "Leaf Rake mod",
+                "productName": "Leaf Rake",
                 "productCode": "GDN-0011",
                 "releaseDate": "March 19, 2016",
                 "description": "Leaf rake with 48-inch wooden handle.",
@@ -56,5 +71,10 @@ export class ProductService {
                 "imageUrl": "http://openclipart.org/image/300px/svg_to_png/120337/xbox-controller_01.png"
             }
         ];
+    }
+
+    private handleError(err: HttpErrorResponse) {
+        console.log(err.message);
+        return Observable.throw(err.message);
     }
 }
