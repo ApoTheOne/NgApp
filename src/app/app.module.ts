@@ -8,8 +8,9 @@ import { AppComponent } from './app.component';
 import { ProductListComponent } from './products/product-list.component';
 import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
 import { StarComponent } from './shared/star.component';
-import { ProductDetail } from './products/product-detail.component';
+import { ProductDetailComponent } from './products/product-detail.component';
 import { WelcomeComponent } from './home/welcome.component';
+import { ProductGuardService } from './products/product-guard.service';
 
 
 
@@ -19,7 +20,7 @@ import { WelcomeComponent } from './home/welcome.component';
     ProductListComponent,
     ConvertToSpacesPipe,
     StarComponent,
-    ProductDetail,
+    ProductDetailComponent,
     WelcomeComponent 
   ],
   imports: [
@@ -28,13 +29,13 @@ import { WelcomeComponent } from './home/welcome.component';
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'products', component: ProductListComponent },
-      { path: 'products/:id', component: ProductListComponent },
+      { path: 'products/:id', canActivate:[ProductGuardService], component: ProductDetailComponent },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo:'welcome', pathMatch:'full'},
       { path: '**', redirectTo:'welcome', pathMatch:'full'}
     ])
   ],
-  providers: [],
+  providers: [ProductGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
