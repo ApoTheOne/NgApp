@@ -32,6 +32,10 @@ export class ProductListComponent implements OnInit{
         this.listFilter = 'cart';
     }
 
+    onRatingClicked(message: string): void {
+        this.pageTitle = 'Product rating: ' + message;
+    }
+
     products: IProduct[] = [
         {
             "productId": 1,
