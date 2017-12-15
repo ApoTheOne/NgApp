@@ -38,4 +38,8 @@ export class ProductDetailComponent implements OnInit {
         //                    error => this.errorMessratingge = <any>error);
     }
 
+    onBack(): void {
+        this._router.navigate(['/products']);
+    }
+
 }
